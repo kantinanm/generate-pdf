@@ -1,0 +1,12 @@
+{
+    "name": "kantinanm/generate-pdf",
+    "description": "for learning php with fpdf and composer package manager",
+    "authors": [
+        {
+            "name": "Kantinan"
+        }
+    ],
+    "require": {
+        "fpdf/fpdf": "^1.84"
+    }
+}
