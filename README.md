@@ -14,7 +14,7 @@ cp myfont/.* vender/composer/Fpdf/src/font
 ```
 > Or in windows use command
 ```
-copy myfont/ *.*  ./vender/composer/fpdf/fpdf/src/Fpdf/font
+copy myfont/ *.*  ./vender/fpdf/fpdf/src/Fpdf/font
 ```
 
 3.deploy root folder in your webserver and test acccess.
