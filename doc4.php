@@ -65,12 +65,12 @@ $pdf->AddPage();
 $pdf->SetFont('THSarabun','B',20);
 $pdf->SetXY(6,6);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(90,8,iconv( 'UTF-8','cp874' , 'รายงานสรุปการปฏิบัติงานวิศวกรตรวจสอบผล' ),0,1,'L',false);
+$pdf->Cell(90,8,iconv( 'UTF-8','cp874' , 'รายงานสรุปการปฏิบัติงานผู้ปฏิบัติการทดสอบ' ),0,1,'L',false);
 
 $pdf->SetFont('THSarabun','B',14);
 $pdf->SetXY(6,13);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(55,6,iconv( 'UTF-8','cp874' , 'และค่าตอบแทนหัวหน้าศูนย์ทดสอบ' ),0,1,'L',false);
+$pdf->Cell(55,6,iconv( 'UTF-8','cp874' , 'และค่าตอบแทนเจ้าหน้าที่โครงการ' ),0,1,'L',false);
 
 /*
 $pdf->SetXY(6,17);
@@ -93,37 +93,37 @@ $sumEngineer[6]=0;
 $sumEngineer[7]=0;
 $sumEngineer[8]=0;
 $sumEngineer[9]=0;
-$sumEngineer[10]=0;
-$sumEngineer[11]=0;
+//$sumEngineer[10]=0;
+//$sumEngineer[11]=0;
 
 
-$dataEngineer[0]=array("name"=>"อำพล","nu_net"=>"ampolt","rotage"=>60,"preset_x"=>3,"preset_y"=>8,"blank"=>"no","font_size"=>11);
-$dataEngineer[1]=array("name"=>"ดลเดช","nu_net"=>"dondejt","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[2]=array("name"=>"จีรพงษ์","nu_net"=>"jeerapongl","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[3]=array("name"=>"ปาจรีย์","nu_net"=>"pajareet","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[4]=array("name"=>"พรนภา","nu_net"=>"pornnapas","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[5]=array("name"=>"สสิกรณณ์","nu_net"=>"sasikorn","rotage"=>60,"preset_x"=>3,"preset_y"=>10,"blank"=>"no","font_size"=>11);
-$dataEngineer[6]=array("name"=>"ธนพล","nu_net"=>"tanaponph","rotage"=>60,"preset_x"=>3,"preset_y"=>8,"blank"=>"no","font_size"=>11);
-$dataEngineer[7]=array("name"=>"วิรินทร์","nu_net"=>"virink","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[8]=array("name"=>"วรางค์ลักษณ์","nu_net"=>"waranglucks","rotage"=>60,"preset_x"=>2,"preset_y"=>11,"blank"=>"no","font_size"=>9);
-$dataEngineer[9]=array("name"=>"วิลาวัลย์","nu_net"=>"wilawank","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[10]=array("name"=>"ภัคพงศ์","nu_net"=>"phakphongh","rotage"=>60,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
-$dataEngineer[11]=array("name"=>"","nu_net"=>"","rotage"=>90,"preset_x"=>4,"preset_y"=>9,"blank"=>"yes","font_size"=>11);
+$dataEngineer[0]=array("name"=>"อภิชาติ","nu_net"=>"apicharts","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[1]=array("name"=>"ชัยวัฒน์","nu_net"=>"chaiwatk","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[2]=array("name"=>"กาลไกล","nu_net"=>"kankaiv","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[3]=array("name"=>"วิชญา","nu_net"=>"vichchayai","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[4]=array("name"=>"นิภาวรรณ","nu_net"=>"nipawanc","rotage"=>50,"preset_x"=>3,"preset_y"=>10,"blank"=>"no","font_size"=>11);
+$dataEngineer[5]=array("name"=>"อัมพรรัตน์","nu_net"=>"umpornratm","rotage"=>50,"preset_x"=>3,"preset_y"=>10,"blank"=>"no","font_size"=>11);
+$dataEngineer[6]=array("name"=>"พนารัตน์","nu_net"=>"panaratk","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[7]=array("name"=>"ศุภวรรณ","nu_net"=>"supawanw","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[8]=array("name"=>"มณีรัตน์","nu_net"=>"maneerats","rotage"=>50,"preset_x"=>2,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+$dataEngineer[9]=array("name"=>"นิชานาถ","nu_net"=>"nichanartp","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+//$dataEngineer[10]=array("name"=>"","nu_net"=>"","rotage"=>50,"preset_x"=>3,"preset_y"=>9,"blank"=>"no","font_size"=>11);
+//$dataEngineer[11]=array("name"=>"","nu_net"=>"","rotage"=>50,"preset_x"=>4,"preset_y"=>9,"blank"=>"yes","font_size"=>11);
 //$dataEngineer[11]=array("name"=>"กรกฎ","nu_net"=>"korakodn","rotage"=>90,"preset_x"=>4,"preset_y"=>9,"blank"=>"no","font_size"=>11);
 
 //$posXColHeader=[];
 $posXColHeader[0]=99;
-$posXColHeader[1]=108;
-$posXColHeader[2]=117;
-$posXColHeader[3]=126;
-$posXColHeader[4]=135;
-$posXColHeader[5]=144;
-$posXColHeader[6]=153;
-$posXColHeader[7]=162;
-$posXColHeader[8]=171;
-$posXColHeader[9]=180;
-$posXColHeader[10]=189;
-$posXColHeader[11]=198;
+$posXColHeader[1]=109.65;
+$posXColHeader[2]=120.3;
+$posXColHeader[3]=130.95;
+$posXColHeader[4]=141.6;
+$posXColHeader[5]=152.25;
+$posXColHeader[6]=162.9;
+$posXColHeader[7]=173.55;
+$posXColHeader[8]=184.2;
+$posXColHeader[9]=194.85;
+//$posXColHeader[10]=189;
+//$posXColHeader[11]=198;
 
 $pdf->SetXY(60,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
@@ -132,9 +132,11 @@ $pdf->Cell(25,$hightRow+3,iconv( 'UTF-8','cp874' , 'จำนวนเงิน'
 $pdf->SetFont('THSarabun','B',12);
 $pdf->SetXY(99,10);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
+$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
 
-
+$pdf->SetXY(152.25,10);
+$pdf->SetFillColor(255, 255, 255);
+$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
 
 
 
@@ -151,11 +153,11 @@ foreach($dataEngineer as $key=>$value){
 	}
 
 	$pdf->SetFont('THSarabun','B',12);
-	$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+	$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
 	
 	if($value['blank']=="no"){
 		$pdf->SetFont('THSarabun','B',$value['font_size']);
-		$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,($key==count($dataEngineer)-1)?90:$value['rotage']);
+		$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,$value['rotage']);
 	}
 
 }
@@ -164,73 +166,75 @@ foreach($dataEngineer as $key=>$value){
 $engPos1=99;
 $pdf->SetXY($engPos1,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 1
-$pdf->SetFont('THSarabun','B',9);
-$pdf->RotatedText($engPos1+2,$startP2BaseLineY+11,'วรางค์ลักษณ์' ,60);
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 1
+$pdf->SetFont('THSarabun','B',11);
+$pdf->RotatedText($engPos1+3,$startP2BaseLineY+9,'อภิชาติ' ,50);
 
-$engPos2=108;
+$engPos2=109.65;
 $pdf->SetXY($engPos2,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 2
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 2
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos2+3,$startP2BaseLineY+8,'อำพล' ,60);
+$pdf->RotatedText($engPos2+3,$startP2BaseLineY+9,'ชัยวัฒน์' ,50);
 
-$engPos3=117;
+$engPos3=120.3;
 $pdf->SetXY($engPos3,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 3
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 3
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos3+3,$startP2BaseLineY+9,'ดลเดช' ,60);
+$pdf->RotatedText($engPos3+3,$startP2BaseLineY+9,'กาลไกล' ,50);
 
-$engPos4=126;
+$engPos4=130.95;
 $pdf->SetXY($engPos4,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 4
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 4
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos4+3,$startP2BaseLineY+9,'จีรพงษ์' ,60);
+$pdf->RotatedText($engPos4+3,$startP2BaseLineY+9,'วิชญา' ,50);
 
-$engPos5=135;
+
+$engPos5=141.6;
 $pdf->SetXY($engPos5,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 5
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 5
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos5+3,$startP2BaseLineY+9,'ปาจรีย์' ,60);
+$pdf->RotatedText($engPos5+3,$startP2BaseLineY+10,'นิภาวรรณ' ,50);
 
-$engPos6=144;
+$engPos6=152.25;
 $pdf->SetXY($engPos6,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 6
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 6
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos6+3,$startP2BaseLineY+9,'ภัคพงศ์' ,60);
+$pdf->RotatedText($engPos6+3,$startP2BaseLineY+10,'อัมพรรัตน์' ,50);
 
-$engPos7=153;
+$engPos7=162.9;
 $pdf->SetXY($engPos7,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 7
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 7
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos7+3,$startP2BaseLineY+9,'พรนภา' ,60);
+$pdf->RotatedText($engPos7+3,$startP2BaseLineY+9,'พนารัตน์' ,50);
 
-$engPos8=162;
+$engPos8=173.55;
 $pdf->SetXY($engPos8,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 8
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 8
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos8+3,$startP2BaseLineY+10,'สสิกรณณ์' ,60);
+$pdf->RotatedText($engPos8+3,$startP2BaseLineY+9,'ศุภวรรณ' ,50);
 
-$engPos9=171;
+$engPos9=184.2;
 $pdf->SetXY($engPos9,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 9
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 9
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos9+3,$startP2BaseLineY+8,'ธนพล' ,60);
+$pdf->RotatedText($engPos9+3,$startP2BaseLineY+9,'มณีรัตน์' ,50);
 
-$engPos10=180;
+$engPos10=194.85;
 $pdf->SetXY($engPos10,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
-$pdf->Cell(9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 10
+$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ 10
 $pdf->SetFont('THSarabun','B',11);
-$pdf->RotatedText($engPos10+3,$startP2BaseLineY+9,'วิรินทร์' ,60);
+$pdf->RotatedText($engPos10+3,$startP2BaseLineY+9,'นิชานาถ' ,50);*/
 
+/*
 $engPos11=189;
 $pdf->SetXY($engPos11,$startP2BaseLineY-1);
 $pdf->SetFont('THSarabun','B',12);
@@ -347,14 +351,13 @@ $pdf->SetFont('THSarabun','',12);
 $month_th="กรกฏาคม";
 $customer_env=38;
 
-$jobListsENV[0]=array("work_code"=>"ENV368/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0533","department"=>"บริษัท การบินกรุงเทพ จำกัด (มหาชน)","sub_category"=>"water","total"=>10110.00,"income_cecentre"=>8795.70,"boss_dispense"=>879.57,"engineer_nu_net"=>"wilawank","engineer_dispense"=>1759.14);
-$jobListsENV[1]=array("work_code"=>"ENV363/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0534","department"=>"บริษัท เซ็นทรัลเวิลด์ จำกัด","sub_category"=>"water","total"=>6220.00,"income_cecentre"=>5411.40,"boss_dispense"=>541.14,"engineer_nu_net"=>"ampolt","engineer_dispense"=>1082.28);
-$jobListsENV[2]=array("work_code"=>"CE 92/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0532","department"=>"บริษัท เก้าทัพวิศวกรรม จำกัด","sub_category"=>"concrete","total"=>360.00,"income_cecentre"=>313.20,"boss_dispense"=>31.32,"engineer_nu_net"=>"jeerapongl","engineer_dispense"=>62.64,"technician_nu_net"=>"apicharts","technician_dispense"=>46.98,"office_dispense"=>15.66);
+$jobListsENV[0]=array("work_code"=>"ENV368/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0533","department"=>"บริษัท การบินกรุงเทพ จำกัด (มหาชน)","sub_category"=>"water","total"=>10110.00,"income_cecentre"=>8795.70,"boss_dispense"=>879.57,"technician_nu_net"=>"nipawanc","technician_dispense"=>1319.36,"office_dispense"=>439.79);
+$jobListsENV[1]=array("work_code"=>"ENV363/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0534","department"=>"บริษัท เซ็นทรัลเวิลด์ จำกัด","sub_category"=>"water","total"=>6220.00,"income_cecentre"=>5411.40,"boss_dispense"=>541.14,"technician_nu_net"=>"nipawanc","technician_dispense"=>811.71,"office_dispense"=>270.57);
+$jobListsENV[2]=array("work_code"=>"CE 92/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0532","department"=>"บริษัท เก้าทัพวิศวกรรม จำกัด","sub_category"=>"concrete","total"=>360.00,"income_cecentre"=>313.20,"boss_dispense"=>31.32,"technician_nu_net"=>"apicharts","technician_dispense"=>46.98,"office_dispense"=>15.66);
 
 
 
-
-for ($i=3; $i<98; $i++) {
+for ($i=3; $i<50; $i++) {
 	$jobListsENV[$i]=$jobListsENV[1];
 }
 
@@ -427,23 +430,42 @@ foreach($jobListsENV as $key=>$value){
 
 		if($item['blank']=="yes"){
 			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+			$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 		}else{
 			$pdf->SetFillColor(255, 255, 255);
 
-			if($value["engineer_nu_net"]==$item["nu_net"]){
-				$pdf->SetFont('THSarabun','',9);
-				$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["engineer_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
-				
-				$currency_eng=$value["engineer_dispense"];
-				settype($currency_eng,"float");
-				$oldSum =$sumEngineer[$keySq];
-
-				$sumEngineer[$keySq] =$oldSum+$currency_eng;
-
+			if($keySq<5){
+				//ผู้ปฏิบัติการทดสอบ
+				if($value["technician_nu_net"]==$item["nu_net"]){
+					$pdf->SetFont('THSarabun','',9);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["technician_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
+					
+					$currency_Tech=$value["technician_dispense"];
+					settype($currency_Tech,"float");
+					$oldSumTech =$sumEngineer[$keySq];
+	
+					$sumEngineer[$keySq] =$oldSumTech+$currency_Tech;
+	
+				}else{
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+				}
 			}else{
-				$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+				//เจ้าหน้าที่โครงการ
+
+				
+					$pdf->SetFont('THSarabun','',9);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["office_dispense"],2) ),1,1,'C',false); //เจ้าหน้าที่โครงการ
+					
+					$currency_Officer=$value["office_dispense"];
+					settype($currency_Officer,"float");
+					$oldSumTech =$sumEngineer[$keySq];
+	
+					$sumEngineer[$keySq] =$oldSumTech+$currency_Officer;
+	
+
 			}
+
+
 		}
 
 	}
@@ -545,11 +567,11 @@ if(count($jobListsENV)<=46){
 
 		if($item['blank']=="yes"){
 			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+			$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 		}else{
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->SetFont('THSarabun','B',8);
-			$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+			$pdf->SetFont('THSarabun','B',9);
+			$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
 		}
 
 	}
@@ -558,6 +580,7 @@ if(count($jobListsENV)<=46){
 
 	//ขึ้นบรรทัดใหม่
 	$posXRow_list +=$hightRow;
+
 
 	//sum ทุกหมวด
 
@@ -610,7 +633,11 @@ if(count($jobListsENV)<=46){
 	$pdf->SetFont('THSarabun','B',12);
 	$pdf->SetXY(99,10);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
+	$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
+	
+	$pdf->SetXY(152.25,10);
+	$pdf->SetFillColor(255, 255, 255);
+	$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
 
 
 	foreach($dataEngineer as $key=>$value){
@@ -625,11 +652,11 @@ if(count($jobListsENV)<=46){
 		}
 	
 		$pdf->SetFont('THSarabun','B',12);
-		$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
-		
+		$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+	
 		if($value['blank']=="no"){
 			$pdf->SetFont('THSarabun','B',$value['font_size']);
-			$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,($key==count($dataEngineer)-1)?90:$value['rotage']);
+			$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,$value['rotage']);
 		}
 	
 	}
@@ -704,11 +731,11 @@ if(count($jobListsENV)<=46){
 
 		if($item['blank']=="yes"){
 			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+			$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 		}else{
 			$pdf->SetFillColor(255, 255, 255);
 			$pdf->SetFont('THSarabun','B',8);
-			$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+			$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
 		}
 
 	}
@@ -764,7 +791,11 @@ if(count($jobListsENV)<=46){
 		$pdf->SetFont('THSarabun','B',12);
 		$pdf->SetXY(99,10);
 		$pdf->SetFillColor(255, 255, 255);
-		$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
+		$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
+		
+		$pdf->SetXY(152.25,10);
+		$pdf->SetFillColor(255, 255, 255);
+		$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
 	
 	
 		foreach($dataEngineer as $key=>$value){
@@ -772,6 +803,7 @@ if(count($jobListsENV)<=46){
 			$engPos=$posXColHeader[$key];
 			$pdf->SetXY($engPos,$startP2BaseLineY-1);
 			
+
 			if($value['blank']=="yes"){
 				$pdf->SetFillColor(206, 213, 222);
 			}else{
@@ -779,11 +811,11 @@ if(count($jobListsENV)<=46){
 			}
 		
 			$pdf->SetFont('THSarabun','B',12);
-			$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+			$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
 			
 			if($value['blank']=="no"){
 				$pdf->SetFont('THSarabun','B',$value['font_size']);
-				$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,($key==count($dataEngineer)-1)?90:$value['rotage']);
+				$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,$value['rotage']);
 			}
 		
 		}
@@ -882,22 +914,39 @@ if(count($jobListsENV)<=46){
 		
 				if($item['blank']=="yes"){
 					$pdf->SetFillColor(206, 213, 222);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 				}else{
 					$pdf->SetFillColor(255, 255, 255);
 		
-					if($jobListsENV[$i]["engineer_nu_net"]==$item["nu_net"]){
-						$pdf->SetFont('THSarabun','',9);
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["engineer_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
-						
-						$currency_eng=$jobListsENV[$i]["engineer_dispense"];
-						settype($currency_eng,"float");
-						$oldSum =$sumEngineer[$keySq];
-		
-						$sumEngineer[$keySq] =$oldSum+$currency_eng;
-		
+					if($keySq<5){
+						//ผู้ปฏิบัติการทดสอบ
+						if($value["technician_nu_net"]==$item["nu_net"]){
+							$pdf->SetFont('THSarabun','',9);
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["technician_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
+							
+							$currency_Tech=$jobListsENV[$i]["technician_dispense"];
+							settype($currency_Tech,"float");
+							$oldSumTech =$sumEngineer[$keySq];
+			
+							$sumEngineer[$keySq] =$oldSumTech+$currency_Tech;
+			
+						}else{
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+						}
 					}else{
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+						//เจ้าหน้าที่โครงการ
+		
+						
+							$pdf->SetFont('THSarabun','',9);
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["office_dispense"],2) ),1,1,'C',false); //เจ้าหน้าที่โครงการ
+							
+							$currency_Officer=$jobListsENV[$i]["office_dispense"];
+							settype($currency_Officer,"float");
+							$oldSumTech =$sumEngineer[$keySq];
+			
+							$sumEngineer[$keySq] =$oldSumTech+$currency_Officer;
+			
+		
 					}
 				}
 		
@@ -962,11 +1011,11 @@ if(count($jobListsENV)<=46){
 		
 				if($item['blank']=="yes"){
 					$pdf->SetFillColor(206, 213, 222);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 				}else{
 					$pdf->SetFillColor(255, 255, 255);
-					$pdf->SetFont('THSarabun','B',8);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+					$pdf->SetFont('THSarabun','B',9);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
 				}
 		
 			}
@@ -1009,6 +1058,8 @@ if(count($jobListsENV)<=46){
 		if(($numberEnv>97)&(count($jobListsENV)<=160)){
 			// ขึ้นหน้าไปเพื่อไป แสดงผล หรือสรุปผลให้จบอย่างเดียว
 			$pdf->AddPage("P",'A4');
+
+			//return;
 			//summary only
 			$posXRowP4_list=28; // fix start datarow //แสดงข้อมูลต่อ
 
@@ -1016,18 +1067,24 @@ if(count($jobListsENV)<=46){
 				// เพิ่มหัวตาราง
 				$pdf->SetXY(60,$startP2BaseLineY-1);
 				$pdf->SetFont('THSarabun','B',12);
-				$pdf->Cell(25,$hightRow+3,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',true); //จำนวนเงิน
+				$pdf->Cell(25,$hightRow+3,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',false); //จำนวนเงิน
 				
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(99,10);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
-
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
+				
+				$pdf->SetXY(152.25,10);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
+			
+			
 				foreach($dataEngineer as $key=>$value){
 					//echo "The index is = " . $key . ", and value is = " . $value;
 					$engPos=$posXColHeader[$key];
 					$pdf->SetXY($engPos,$startP2BaseLineY-1);
 					
+		
 					if($value['blank']=="yes"){
 						$pdf->SetFillColor(206, 213, 222);
 					}else{
@@ -1035,44 +1092,44 @@ if(count($jobListsENV)<=46){
 					}
 				
 					$pdf->SetFont('THSarabun','B',12);
-					$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+					$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
 					
 					if($value['blank']=="no"){
 						$pdf->SetFont('THSarabun','B',$value['font_size']);
-						$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,($key==count($dataEngineer)-1)?90:$value['rotage']);
+						$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,$value['rotage']);
 					}
 				
 				}
-
+				
 				$pdf->SetFont('THSarabun','B',10);
 				$pdf->SetXY(6,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , 'ลำดับ' ),1,1,'C',true);
-
+				
 				$pdf->SetFont('THSarabun','B',10);
 				$pdf->SetXY(14,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , 'วัน/เดือน/ปี' ),1,1,'C',true);
-
+				
 				$pdf->SetXY(29,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , 'เอกสารอ้างอิง' ),1,1,'C',true);
-
+				
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(44,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , 'ใบงาน' ),1,1,'C',true);
-
+				
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(60,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , '100%' ),1,1,'C',true);
-
+				
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(72,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , '87%' ),1,1,'C',true);
-
+				
 				$pdf->SetFont('THSarabun','B',10);
 				$pdf->SetXY(85,$StartP2headerBaseLineY-7);
 				$pdf->SetFillColor(255, 255, 255);
@@ -1084,9 +1141,12 @@ if(count($jobListsENV)<=46){
 
 			}
 
+			//$pdf->Output();
+
 			//วน loop เริ่มจาก index ที่ 98
 			for ($i=97; $i<count($jobListsENV); $i++) {
 				
+
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(6,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
@@ -1131,22 +1191,39 @@ if(count($jobListsENV)<=46){
 			
 					if($item['blank']=="yes"){
 						$pdf->SetFillColor(206, 213, 222);
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+						$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 					}else{
 						$pdf->SetFillColor(255, 255, 255);
 			
-						if($jobListsENV[$i]["engineer_nu_net"]==$item["nu_net"]){
-							$pdf->SetFont('THSarabun','',9);
-							$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($jobListsENV[$i]["engineer_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
-							
-							$currency_eng=$jobListsENV[$i]["engineer_dispense"];
-							settype($currency_eng,"float");
-							$oldSum =$sumEngineer[$keySq];
-			
-							$sumEngineer[$keySq] =$oldSum+$currency_eng;
-			
+						if($keySq<5){
+							//ผู้ปฏิบัติการทดสอบ
+							if($value["technician_nu_net"]==$item["nu_net"]){
+								$pdf->SetFont('THSarabun','',9);
+								$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["technician_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
+								
+								$currency_Tech=$jobListsENV[$i]["technician_dispense"];
+								settype($currency_Tech,"float");
+								$oldSumTech =$sumEngineer[$keySq];
+				
+								$sumEngineer[$keySq] =$oldSumTech+$currency_Tech;
+				
+							}else{
+								$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+							}
 						}else{
-							$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+							//เจ้าหน้าที่โครงการ
+			
+							
+								$pdf->SetFont('THSarabun','',9);
+								$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["office_dispense"],2) ),1,1,'C',false); //เจ้าหน้าที่โครงการ
+								
+								$currency_Officer=$jobListsENV[$i]["office_dispense"];
+								settype($currency_Officer,"float");
+								$oldSumTech =$sumEngineer[$keySq];
+				
+								$sumEngineer[$keySq] =$oldSumTech+$currency_Officer;
+				
+			
 						}
 					}
 			
@@ -1164,11 +1241,10 @@ if(count($jobListsENV)<=46){
 				$currency_boss_dispense=$jobListsENV[$i]["boss_dispense"];
 				settype($currency_boss_dispense,"float");
 				$sum_boss_dispense +=$currency_boss_dispense;
-		
-			
+				
+
 				$posXRowP4_list +=$hightRow;
 				$numberEnv++;
-			
 				if($numberEnv>147){
 					break;
 				}
@@ -1186,7 +1262,11 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(99,10);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
+				
+				$pdf->SetXY(152.25,10);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
 			
 			
 				foreach($dataEngineer as $key=>$value){
@@ -1201,7 +1281,7 @@ if(count($jobListsENV)<=46){
 					}
 				
 					$pdf->SetFont('THSarabun','B',12);
-					$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+					$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
 					
 					if($value['blank']=="no"){
 						$pdf->SetFont('THSarabun','B',$value['font_size']);
@@ -1284,11 +1364,11 @@ if(count($jobListsENV)<=46){
 			
 					if($item['blank']=="yes"){
 						$pdf->SetFillColor(206, 213, 222);
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+						$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 					}else{
 						$pdf->SetFillColor(255, 255, 255);
-						$pdf->SetFont('THSarabun','B',8);
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+						$pdf->SetFont('THSarabun','B',9);
+						$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
 					}
 			
 				}
@@ -1354,11 +1434,11 @@ if(count($jobListsENV)<=46){
 					}
 				
 					$pdf->SetFont('THSarabun','B',12);
-					$pdf->Cell(($key==count($dataEngineer)-1)?7.5:9,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
+					$pdf->Cell(10.65,12,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true); //วิศวกรคนที่ $key
 					
 					if($value['blank']=="no"){
 						$pdf->SetFont('THSarabun','B',$value['font_size']);
-						$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,($key==count($dataEngineer)-1)?90:$value['rotage']);
+						$pdf->RotatedText($engPos+$value['preset_x'],$startP2BaseLineY+$value['preset_y'],$value['name'] ,$value['rotage']);
 					}
 				
 				}
@@ -1447,25 +1527,35 @@ if(count($jobListsENV)<=46){
 					$pdf->SetXY($engPos,$posXRowP5_list);
 					//$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , $value["engineer_nu_net"] ),1,1,'R',true);
 			
-					if($item['blank']=="yes"){
-						$pdf->SetFillColor(206, 213, 222);
-						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
-					}else{
-						$pdf->SetFillColor(255, 255, 255);
-			
-						if($jobListsENV[$i]["engineer_nu_net"]==$item["nu_net"]){
+					if($keySq<5){
+						//ผู้ปฏิบัติการทดสอบ
+						if($jobListsENV[$i]["technician_nu_net"]==$item["nu_net"]){
 							$pdf->SetFont('THSarabun','',9);
-							$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($jobListsENV[$i]["engineer_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["technician_dispense"],2) ),1,1,'C',false); //วิศวกรคนที่ตรวจสอบผล
 							
-							$currency_eng=$jobListsENV[$i]["engineer_dispense"];
-							settype($currency_eng,"float");
-							$oldSum =$sumEngineer[$keySq];
+							$currency_Tech=$jobListsENV[$i]["technician_dispense"];
+							settype($currency_Tech,"float");
+							$oldSumTech =$sumEngineer[$keySq];
 			
-							$sumEngineer[$keySq] =$oldSum+$currency_eng;
+							$sumEngineer[$keySq] =$oldSumTech+$currency_Tech;
 			
 						}else{
-							$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
 						}
+					}else{
+						//เจ้าหน้าที่โครงการ
+		
+						
+							$pdf->SetFont('THSarabun','',9);
+							$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["office_dispense"],2) ),1,1,'C',false); //เจ้าหน้าที่โครงการ
+							
+							$currency_Officer=$jobListsENV[$i]["office_dispense"];
+							settype($currency_Officer,"float");
+							$oldSumTech =$sumEngineer[$keySq];
+			
+							$sumEngineer[$keySq] =$oldSumTech+$currency_Officer;
+			
+		
 					}
 			
 				}
@@ -1528,11 +1618,11 @@ if(count($jobListsENV)<=46){
 		
 				if($item['blank']=="yes"){
 					$pdf->SetFillColor(206, 213, 222);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
 				}else{
 					$pdf->SetFillColor(255, 255, 255);
 					$pdf->SetFont('THSarabun','B',8);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
 				}
 		
 			}
