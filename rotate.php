@@ -1,6 +1,10 @@
 <?php
 //require('fpdf.php');
+
 require_once 'vendor/autoload.php';
+
+define('FPDF_FONTPATH','./myfont');
+
 use Fpdf\Fpdf;
 
 class PDF_Rotate extends FPDF

@@ -1,10 +1,59 @@
 <?php
 
-require_once 'vendor/autoload.php';
-use Fpdf\Fpdf;
+//require_once 'vendor/autoload.php';
+//define('FPDF_FONTPATH','./myfont');
+
+//use Fpdf\Fpdf;
+//error_reporting(E_ALL); ini_set('display_errors', 1);
+
+require('rotate.php');
 
 
-$pdf = new Fpdf('L','mm',array(210,297));//A4
+class PDF extends PDF_Rotate
+{
+	function RotatedText($x,$y,$txt,$angle)
+	{
+		//Text rotated around its origin
+		$this->Rotate($angle,$x,$y);
+		$this->Text($x,$y, iconv( 'UTF-8','cp874' , $txt ));
+		$this->Rotate(0);
+	}
+
+	function RotatedImage($file,$x,$y,$w,$h,$angle)
+	{
+		//Image rotated around its upper-left corner
+		$this->Rotate($angle,$x,$y);
+		$this->Image($file,$x,$y,$w,$h);
+		$this->Rotate(0);
+	}
+
+	function Header()
+	{
+		//Put the watermark
+		$this->SetFont('THSarabun','B',50);
+		$this->SetTextColor(255,192,203);
+		$this->RotatedText(45,190,'หลักฐานประกอบการเบิกจ่าย เท่านั้น',45);
+	}
+
+	function Footer()
+    {
+        // Go to 1.5 cm from bottom
+        $this->SetY(-15);
+        // Select Arial italic 8
+        $this->SetFont('THSarabun','BI',8);
+        // Print centered page number
+        $this->Cell(0,10,'Page '.$this->PageNo()."/{nb}",0,0,'C');
+    }
+
+
+}
+
+$pdf=new PDF('L','mm',array(210,297));
+
+$pdf->AliasNbPages();
+
+
+//$pdf = new Fpdf('L','mm',array(210,297));//A4
 //$pdf->addPage('L');
 //$pdf->AddPage();
 //$pdf->SetFont('Arial','B',16);
@@ -12,12 +61,7 @@ $pdf = new Fpdf('L','mm',array(210,297));//A4
 //$pdf->Output();
 
 
-$book_number="R0236";
-$receive_number="0236001";
-$fullname="คุณอชิสา  เขียวเซน";
-$service_date="18 เม.ย. 2556";
-$employee_name=" xxxxx  yyyyyy";
-$recieve_date="18 เม.ย. 2556";
+
 
 //$pdf=new FPDF();
 //$pdf=new FPDF('P' , 'mm' , 'A4' );
@@ -33,35 +77,7 @@ $pdf->AddFont('THSarabun','I','THSarabun Italic.php');
 $pdf->AddFont('THSarabun','BI','THSarabun Bold Italic.php');
 
 $pdf->AddPage();
-/*
-$pdf->SetFont('THSarabun','B',20);
-$pdf->SetXY(20,0);
-$pdf->SetFillColor(238,213,210);
-$pdf->Cell(170,10,iconv( 'UTF-8','cp874' , 'ใบเสร็จรับเงิน' ),1,1,'C',true);
 
-
-// รูป
-$pdf-> Image('images/logo_recieve.jpg',19,12,96,26,'jpg');
-
-//เลขประจำตัวผู้เสียภาษี
-$pdf->SetFont('THSarabun','',16);
-$pdf->Text( 125 , 20 ,  iconv( 'UTF-8','cp874' , 'เลขประจำตัวผู้เสียภาษี : 1120300751319' ));
-
-
-$pdf->SetFont('THSarabun','',16);
-$pdf->Text( 125 , 32 ,  iconv( 'UTF-8','cp874' , 'เล่มที่ '.$book_number." เลขที่ใบเสร็จ ".$receive_number ));
-
-
-// customer
-$pdf->SetFont('THSarabun','',16);
-$pdf->Text( 20 , 50 ,  iconv( 'UTF-8','cp874' , 'ชื่อลูกค้า '.$fullname ));
-$pdf->Line(34,52,80,52);
-
-// service_date
-$pdf->SetFont('THSarabun','',16);
-$pdf->Text( 135 , 50 ,  iconv( 'UTF-8','cp874' , 'วันที่ '.$service_date ));
-$pdf->Line(144,52,170,52);
-*/
 
 $startBaseLineY=10;
 $StartheaderBaseLineY =15;
@@ -411,7 +427,7 @@ $pdf->Cell(60,$hightFooter,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
 // รวม
 $posXSumCol1=$point_x_row+$hightFooter;
 $pdf->SetXY(60,$posXSumCol1);
-$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_director,2) ),1,1,'R',true);
+$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_director,2) ),1,1,'R',false);
 
 //col 2
 $pdf->SetXY(80,$point_x_row);
@@ -420,7 +436,7 @@ $pdf->Cell(60,$hightFooter,iconv( 'UTF-8','cp874' , '' ),1,0,'R',false);
 // รวม
 $posXSumCol1=$point_x_row+$hightFooter;
 $pdf->SetXY(120,$posXSumCol1);
-$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_engineer,2) ),1,1,'R',true);
+$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_engineer,2) ),1,1,'R',false);
 
 //col 3
 $pdf->SetXY(140,$point_x_row);
@@ -430,7 +446,7 @@ $pdf->Cell(60,$hightFooter,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
 // รวม
 $posXSumCol1=$point_x_row+$hightFooter;
 $pdf->SetXY(180,$posXSumCol1);
-$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_technician,2) ),1,1,'R',true);
+$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_technician,2) ),1,1,'R',false);
 
 
 //col 4
@@ -441,10 +457,10 @@ $pdf->Cell(60,$hightFooter,iconv( 'UTF-8','cp874' , '' ),1,1,'R',false);
 // รวม
 $posXSumCol1=$point_x_row+$hightFooter;
 $pdf->SetXY(240,$posXSumCol1);
-$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_officer,2) ),1,1,'R',true);
+$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_officer,2) ),1,1,'R',false);
 
 $pdf->SetXY(260,$posXSumCol1);
-$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_director+$sum_engineer+$sum_technician+$sum_officer,2) ),1,1,'R',true);
+$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_director+$sum_engineer+$sum_technician+$sum_officer,2) ),1,1,'R',false);
 
 
 //รายชื่อที่ขอเบิกสูงสุดตามอัตราในประกาศ
@@ -506,8 +522,8 @@ $pdf->AddPage("P",'A4');
 $pdf->SetFont('THSarabun','B',20);
 $pdf->SetXY(6,8);
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(200,8,iconv( 'UTF-8','cp874' , 'รายงานสรุปผู้มารับบริการ สาขาวิศวกรรมสิ่งแวดล้อม ของศูนย์ทดสอบวิศวกรรมโยธา' ),0,1,'C',false);
-
+$pdf->Cell(130,8,iconv( 'UTF-8','cp874' , 'รายงานสรุปผู้มารับบริการ สาขาวิศวกรรมสิ่งแวดล้อม' ),0,1,'C',false);
+//$pdf->Cell(130,8,iconv( 'UTF-8','cp874' , 'รายงานสรุปผู้มารับบริการ สาขาวิศวกรรมโยธา' ),0,1,'C',false); //
 
 $startP2BaseLineY=17;
 $StartP2headerBaseLineY =23;
@@ -583,7 +599,7 @@ $jobListsENV[1]=array("work_code"=>"ENV363/2566","ref_date_th"=>"04/07/2566","re
 
 
 
-for ($i=2; $i<120; $i++) {
+for ($i=2; $i<68; $i++) {
 	$jobListsENV[$i]=$jobListsENV[1];
 }
 
@@ -613,52 +629,52 @@ foreach($jobListsENV as $key=>$value){
 	$pdf->SetFont('THSarabun','',12);
 	$pdf->SetXY(6,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',true);
+	$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',false);
 
 	$pdf->SetFont('THSarabun','',10);
 	$pdf->SetXY(14,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' , $value["ref_date_th"] ),1,1,'C',true);
+	$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' , $value["ref_date_th"] ),1,1,'C',false);
 
 
 	$pdf->SetXY(31,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $value["ref_doc"]  ),1,1,'C',true);
+	$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $value["ref_doc"]  ),1,1,'C',false);
 
 	$pdf->SetFont('THSarabun','',10);
 	$pdf->SetXY(56,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $value["department"] ),1,1,'L',true);
+	$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $value["department"] ),1,1,'L',false);
 
 	$pdf->SetFont('THSarabun','',12);
 	$pdf->SetXY(118,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $value["work_code"] ),1,1,'C',true);
+	$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $value["work_code"] ),1,1,'C',false);
 
 	$pdf->SetFont('THSarabun','',10);
 	$pdf->SetXY(136,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="water")?number_format($value["total"],2):"" ),1,1,'R',true);
+	$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="water")?number_format($value["total"],2):"" ),1,1,'R',false);
 
 
 	$pdf->SetXY(148,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="soil_fertilizer_gabage")?number_format($value["total"],2):"" ),1,1,'R',true);
+	$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="soil_fertilizer_gabage")?number_format($value["total"],2):"" ),1,1,'R',false);
 
 
 	$pdf->SetXY(164,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="other_env")?number_format($value["total"],2):"" ),1,1,'R',true);
+	$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($value["sub_category"]=="other_env")?number_format($value["total"],2):"" ),1,1,'R',false);
 
 	$pdf->SetFont('THSarabun','',10);
 	$pdf->SetXY(176,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["total"],2) ),1,1,'R',true);
+	$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["total"],2) ),1,1,'R',false);
 
 
 	$pdf->SetXY(191,$posXRow_list);
 	$pdf->SetFillColor(255, 255, 255);
-	$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["income_cecentre"],2) ),1,1,'R',true);
+	$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($value["income_cecentre"],2) ),1,1,'R',false);
 
 
 
@@ -969,52 +985,52 @@ if(count($jobListsENV)<=46){
 			$pdf->SetFont('THSarabun','',12);
 			$pdf->SetXY(6,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',true);
+			$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',false);
 		
 			$pdf->SetFont('THSarabun','',10);
 			$pdf->SetXY(14,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',true);
+			$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',false);
 		
 		
 			$pdf->SetXY(31,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',true);
+			$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',false);
 		
 			$pdf->SetFont('THSarabun','',10);
 			$pdf->SetXY(56,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',true);
+			$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',false);
 		
 			$pdf->SetFont('THSarabun','',12);
 			$pdf->SetXY(118,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',true);
+			$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',false);
 		
 			$pdf->SetFont('THSarabun','',10);
 			$pdf->SetXY(136,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 		
 		
 			$pdf->SetXY(148,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+			$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 		
 		
 			$pdf->SetXY(164,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 		
 			$pdf->SetFont('THSarabun','',10);
 			$pdf->SetXY(176,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',true);
+			$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',false);
 		
 		
 			$pdf->SetXY(191,$posXRowP2_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',true);
+			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',false);
 		
 		
 		
@@ -1134,13 +1150,13 @@ if(count($jobListsENV)<=46){
 
 		}
 
-		if(($numberEnv>98)&(count($jobListsENV)<=160)){
+		if(($numberEnv>97)&(count($jobListsENV)<=160)){
 			// ขึ้นหน้าไปเพื่อไป แสดงผล หรือสรุปผลให้จบอย่างเดียว
 			$pdf->AddPage("P",'A4');
 			//summary only
 			$posXRowP4_list=28; // fix start datarow //แสดงข้อมูลต่อ
 
-			if(count($jobListsENV)>98){
+			if(count($jobListsENV)>97){
 				// เพิ่มหัวตาราง
 				$pdf->SetXY(136,$startP2BaseLineY+1);
 				$pdf->SetFillColor(255, 255, 255);
@@ -1154,27 +1170,30 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->Cell(28,$hightRow,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',true); //จำนวนเงิน
 				
-				$pdf->SetXY(6,$StartP2headerBaseLineY);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , 'ลำดับ' ),1,1,'C',true);
-				
-				$pdf->SetXY(14,$StartP2headerBaseLineY);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' , 'วัน/เดือน/ปี' ),1,1,'C',true);
-				
-				$pdf->SetXY(31,$StartP2headerBaseLineY);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , 'เอกสารอ้างอิง' ),1,1,'C',true);
-				
-				$pdf->SetXY(56,$StartP2headerBaseLineY);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , 'หน่วยงาน' ),1,1,'C',true);
-				
-				
-				$pdf->SetXY(118,$StartP2headerBaseLineY);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , 'เลขที่ใบงาน' ),1,1,'C',true);
-				
+
+				if(count($jobListsENV)>=99){
+					$pdf->SetXY(6,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , 'ลำดับ' ),1,1,'C',true);
+					
+					$pdf->SetXY(14,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' , 'วัน/เดือน/ปี' ),1,1,'C',true);
+					
+					$pdf->SetXY(31,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , 'เอกสารอ้างอิง' ),1,1,'C',true);
+					
+					$pdf->SetXY(56,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , 'หน่วยงาน' ),1,1,'C',true);
+					
+					
+					$pdf->SetXY(118,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , 'เลขที่ใบงาน' ),1,1,'C',true);
+				}
+
 				
 				$pdf->SetXY(136,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
@@ -1202,52 +1221,52 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(6,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',true);
+				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(14,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',true);
+				$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',false);
 			
 			
 				$pdf->SetXY(31,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',true);
+				$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(56,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',true);
+				$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',false);
 			
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(118,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',true);
+				$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(136,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(148,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(164,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(176,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',true);
+				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(191,$posXRowP4_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',true);
+				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',false);
 			
 			
 				$currency_water=$jobListsENV[$i]["sub_category"]=="water"?$jobListsENV[$i]["total"]:0;
@@ -1300,7 +1319,6 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->Cell(28,$hightRow,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',true); //จำนวนเงิน
 				
-			
 				$pdf->SetXY(136,$StartP2headerBaseLineY);
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'น้ำ' ),1,1,'C',true);
@@ -1321,79 +1339,219 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFillColor(206, 213, 222);
 				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , ' 87 %' ),1,1,'C',true);
 			
-				// ส่วนสรุปผล
-				//รวม
+				if(count($jobListsENV)>=99){
+					$pdf->SetXY(136,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'น้ำ' ),1,1,'C',true);
+					
+					$pdf->SetXY(148,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , 'ดิน/ปุ๋ย/ขยะ' ),1,1,'C',true);
+					
+					$pdf->SetXY(164,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'อื่นๆ' ),1,1,'C',true);
+					
+					$pdf->SetXY(176,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , ' 100 %' ),1,1,'C',true);
+					
+					$pdf->SetXY(191,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , ' 87 %' ),1,1,'C',true);
+				}
+
+				/****
+				 * 
+				 * 
+				 *  if else
+				 * 
+				 * 
+				 */
+				if(count($jobListsENV)>=97 & count($jobListsENV)<=98){
+					//สรุปผลอย่างเดียว
+					//summary only
+					//รวม
 			
-				//sum หมวดน้ำ
-				$pdf->SetFont('THSarabun','B',10);
-				$pdf->SetXY(136,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water,2) ),1,1,'C',true);
-			
-				//sum หมวดดินปุ๋ยขยะ
-				$pdf->SetXY(148,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_soil_fertilizer_gabage,2) ),1,1,'C',true);
-			
-				//sum หมวดอื่นๆ
-				$pdf->SetXY(164,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_other_env,2) ),1,1,'C',true);
-			
-				//sum 100
-				$pdf->SetFont('THSarabun','B',10);
-				$pdf->SetXY(176,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'R',true);
-			
-				//sum 87
-				$pdf->SetXY(191,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
-			
-			
-			
-				//ขึ้นบรรทัดใหม่
-				$posXRowP4_list +=$hightRow;
-			
-				//sum ทุกหมวด
-				$pdf->SetFont('THSarabun','B',10);
-				$pdf->SetXY(136,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2) ),1,1,'C',true);
-			
-			
-			
-				//ขึ้นบรรทัดใหม่
-				$posXRowP2_list +=$hightRow;
-				//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
-			
-				$pdf->SetFont('THSarabun','',12);
-				$pdf->SetXY(6,$posXRowP4_list);
-				$pdf->SetFillColor(206, 213, 222);
-				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
-			
-				$pdf->SetFont('THSarabun','B',12);
-				$pdf->SetXY(26,$posXRowP4_list);
-				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
-			
-			
-				//ขึ้นบรรทัดใหม่
-				$posXRowP4_list +=$hightRow;
-			
-			
-				//ขึ้นบรรทัดใหม่
-				$posXRowP4_list +=$hightRow;
-			
-				$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนใบงานสาขาวิศวกรรมสิ่งแวดล้อม '.count($jobListsENV)." ใบงาน "));
-				$pdf->Text( 80 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'รายรับสาขาวิศวกรรมสิ่งแวดล้อม '.number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2)." บาท" ));
-			
-				//ขึ้นบรรทัดใหม่
-				$posXRowP4_list +=$hightRow;
-			
-				$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนลูกค้าที่มารับบริการ สาขาวิศวกรรมสิ่งแวดล้อม '.$customer_env." หน่วยงาน "));
-				// สรุปผล
+					//sum หมวดน้ำ
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(136,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water,2) ),1,1,'C',false);
+				
+					//sum หมวดดินปุ๋ยขยะ
+					$pdf->SetXY(148,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_soil_fertilizer_gabage,2) ),1,1,'C',false);
+				
+					//sum หมวดอื่นๆ
+					$pdf->SetXY(164,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_other_env,2) ),1,1,'C',false);
+				
+					//sum 100
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(176,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'R',false);
+				
+					//sum 87
+					$pdf->SetXY(191,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',false);
+					
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+
+					//sum ทุกหมวด
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(136,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2) ),1,1,'C',false);
+				
+				
+				
+					//ขึ้นบรรทัดใหม่
+					//$posXRowP4_list +=$hightRow;
+					//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
+				
+					$pdf->SetFont('THSarabun','',12);
+					$pdf->SetXY(6,$posXRowP4_list);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
+				
+					$pdf->SetFont('THSarabun','B',12);
+					$pdf->SetXY(26,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
+				
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+					$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนใบงานสาขาวิศวกรรมสิ่งแวดล้อม '.count($jobListsENV)." ใบงาน "));
+					$pdf->Text( 80 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'รายรับสาขาวิศวกรรมสิ่งแวดล้อม '.number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2)." บาท" ));
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+					$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนลูกค้าที่มารับบริการ สาขาวิศวกรรมสิ่งแวดล้อม '.$customer_env." หน่วยงาน "));
+					// สรุปผล
+				}
+
+				if(count($jobListsENV)>=99 & count($jobListsENV)!=145){
+					
+					$pdf->SetXY(6,$posXRowP4_list);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(130,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
+
+
+					//$pdf->SetFont('THSarabun','B',12);
+					//$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , 'สาขาวิศวกรรมสิ่งแวดล้อม' ),1,1,'C',true); //จำนวนเงิน
+					
+					$pdf->SetXY(176,$startP2BaseLineY+1);
+					$pdf->SetFillColor(255, 255, 255);
+					
+					$pdf->SetFont('THSarabun','B',12);
+					$pdf->Cell(28,$hightRow,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',true); //จำนวนเงิน
+
+					$pdf->SetXY(136,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'น้ำ' ),1,1,'C',true);
+					
+					$pdf->SetXY(148,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , 'ดิน/ปุ๋ย/ขยะ' ),1,1,'C',true);
+					
+					$pdf->SetXY(164,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'อื่นๆ' ),1,1,'C',true);
+					
+					$pdf->SetXY(176,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , ' 100 %' ),1,1,'C',true);
+					
+					$pdf->SetXY(191,$StartP2headerBaseLineY);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , ' 87 %' ),1,1,'C',true);
+
+					//sum หมวดน้ำ
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(136,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water,2) ),1,1,'C',false);
+				
+					//sum หมวดดินปุ๋ยขยะ
+					$pdf->SetXY(148,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_soil_fertilizer_gabage,2) ),1,1,'C',false);
+				
+					//sum หมวดอื่นๆ
+					$pdf->SetXY(164,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_other_env,2) ),1,1,'C',false);
+				
+					//sum 100
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(176,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'R',false);
+				
+					//sum 87
+					$pdf->SetXY(191,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',false);
+					
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+
+					//sum ทุกหมวด
+					$pdf->SetFont('THSarabun','B',10);
+					$pdf->SetXY(136,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2) ),1,1,'C',false);
+				
+				
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+					//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
+				
+					$pdf->SetFont('THSarabun','',12);
+					$pdf->SetXY(6,$posXRowP4_list);
+					$pdf->SetFillColor(206, 213, 222);
+					$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
+				
+					$pdf->SetFont('THSarabun','B',12);
+					$pdf->SetXY(26,$posXRowP4_list);
+					$pdf->SetFillColor(255, 255, 255);
+					$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
+				
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+					$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนใบงานสาขาวิศวกรรมสิ่งแวดล้อม '.count($jobListsENV)." ใบงาน "));
+					$pdf->Text( 80 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'รายรับสาขาวิศวกรรมสิ่งแวดล้อม '.number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2)." บาท" ));
+				
+					//ขึ้นบรรทัดใหม่
+					$posXRowP4_list +=$hightRow;
+				
+					$pdf->Text( 6 , $posXRowP4_list ,  iconv( 'UTF-8','cp874' , 'จำนวนลูกค้าที่มารับบริการ สาขาวิศวกรรมสิ่งแวดล้อม '.$customer_env." หน่วยงาน "));
+					// สรุปผล
+
+				}
+
 			}
 
 		}
@@ -1403,7 +1561,7 @@ if(count($jobListsENV)<=46){
 			//summary only
 			$posXRowP5_list=28; // fix start datarow //แสดงข้อมูลต่อ
 
-			if(count($jobListsENV)>148){
+			if(count($jobListsENV)>=148){
 				// เพิ่มหัวตาราง
 				$pdf->SetXY(136,$startP2BaseLineY+1);
 				$pdf->SetFillColor(255, 255, 255);
@@ -1466,52 +1624,52 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(6,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',true);
+				$pdf->Cell(8,$hightRow,iconv( 'UTF-8','cp874' , $numberEnv ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(14,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',true);
+				$pdf->Cell(17,$hightRow,iconv( 'UTF-8','cp874' ,$jobListsENV[$i]["ref_date_th"] ),1,1,'C',false);
 			
 			
 				$pdf->SetXY(31,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',true);
+				$pdf->Cell(25,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["ref_doc"]  ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(56,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',true);
+				$pdf->Cell(62,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["department"] ),1,1,'L',false);
 			
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(118,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',true);
+				$pdf->Cell(18,$hightRow,iconv( 'UTF-8','cp874' , $jobListsENV[$i]["work_code"] ),1,1,'C',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(136,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="water")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(148,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="soil_fertilizer_gabage")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(164,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',true);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , ($jobListsENV[$i]["sub_category"]=="other_env")?number_format($jobListsENV[$i]["total"],2):"" ),1,1,'R',false);
 			
 				$pdf->SetFont('THSarabun','',10);
 				$pdf->SetXY(176,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',true);
+				$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["total"],2) ),1,1,'R',false);
 			
 			
 				$pdf->SetXY(191,$posXRowP5_list);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',true);
+				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($jobListsENV[$i]["income_cecentre"],2) ),1,1,'R',false);
 			
 			
 				$currency_water=$jobListsENV[$i]["sub_category"]=="water"?$jobListsENV[$i]["total"]:0;
@@ -1561,7 +1719,13 @@ if(count($jobListsENV)<=46){
 			$pdf->SetFont('THSarabun','B',12);
 			$pdf->Cell(28,$hightRow,iconv( 'UTF-8','cp874' , 'จำนวนเงิน' ),1,1,'C',true); //จำนวนเงิน
 			
-		
+			if(count($jobListsENV)>147){
+				$pdf->SetXY(6,$posXRowP5_list);
+				$pdf->SetFillColor(206, 213, 222);
+				$pdf->Cell(130,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
+			}
+
+
 			$pdf->SetXY(136,$StartP2headerBaseLineY);
 			$pdf->SetFillColor(206, 213, 222);
 			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , 'น้ำ' ),1,1,'C',true);
@@ -1589,28 +1753,28 @@ if(count($jobListsENV)<=46){
 			$pdf->SetFont('THSarabun','B',10);
 			$pdf->SetXY(136,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water,2) ),1,1,'C',true);
+			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water,2) ),1,1,'C',false);
 		
 			//sum หมวดดินปุ๋ยขยะ
 			$pdf->SetXY(148,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_soil_fertilizer_gabage,2) ),1,1,'C',true);
+			$pdf->Cell(16,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_soil_fertilizer_gabage,2) ),1,1,'C',false);
 		
 			//sum หมวดอื่นๆ
 			$pdf->SetXY(164,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_other_env,2) ),1,1,'C',true);
+			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_other_env,2) ),1,1,'C',false);
 		
 			//sum 100
 			$pdf->SetFont('THSarabun','B',10);
 			$pdf->SetXY(176,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'R',true);
+			$pdf->Cell(15,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'R',false);
 		
 			//sum 87
 			$pdf->SetXY(191,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
+			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',false);
 		
 		
 		
@@ -1621,12 +1785,12 @@ if(count($jobListsENV)<=46){
 			$pdf->SetFont('THSarabun','B',10);
 			$pdf->SetXY(136,$posXRowP5_list);
 			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2) ),1,1,'C',true);
+			$pdf->Cell(40,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_water+$sum_soil_fertilizer_gabage+$sum_other_env,2) ),1,1,'C',false);
 		
 		
 		
 			//ขึ้นบรรทัดใหม่
-			$posXRowP2_list +=$hightRow;
+			$posXRowP5_list +=$hightRow;
 			//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
 		
 			$pdf->SetFont('THSarabun','',12);
