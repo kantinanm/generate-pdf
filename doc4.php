@@ -357,7 +357,7 @@ $jobListsENV[2]=array("work_code"=>"CE 92/2566","ref_date_th"=>"04/07/2566","ref
 
 
 
-for ($i=3; $i<50; $i++) {
+for ($i=3; $i<36; $i++) {
 	$jobListsENV[$i]=$jobListsENV[1];
 }
 
@@ -1144,7 +1144,7 @@ if(count($jobListsENV)<=46){
 			//$pdf->Output();
 
 			//วน loop เริ่มจาก index ที่ 98
-			for ($i=97; $i<count($jobListsENV); $i++) {
+			for ($i=98; $i<count($jobListsENV); $i++) {
 				
 
 				$pdf->SetFont('THSarabun','',12);
@@ -1406,12 +1406,12 @@ if(count($jobListsENV)<=46){
 
 		}
 
-		if(($numberEnv>145)&(count($jobListsENV)<=160)){
+		if(($numberEnv>146)&(count($jobListsENV)<=160)){
 			$pdf->AddPage("P",'A4');
 			//summary only
 			$posXRowP5_list=28; // fix start datarow //แสดงข้อมูลต่อ
 
-			if(count($jobListsENV)>148){
+			if(count($jobListsENV)>145){
 				// เพิ่มหัวตาราง
 				$pdf->SetXY(60,$startP2BaseLineY-1);
 				$pdf->SetFont('THSarabun','B',12);
@@ -1420,7 +1420,11 @@ if(count($jobListsENV)<=46){
 				$pdf->SetFont('THSarabun','B',12);
 				$pdf->SetXY(99,10);
 				$pdf->SetFillColor(255, 255, 255);
-				$pdf->Cell(106.5,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนวิศวกรตรวจสอบผล (20%)' ),1,1,'C',false);
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนผู้ปฏิบัติการทดสอบ(15%)' ),1,1,'C',false);
+				
+				$pdf->SetXY(152.25,10);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(53.25,6,iconv( 'UTF-8','cp874' , 'ค่าตอบแทนเจ้าหน้าที่โครงการ(5%)' ),1,1,'C',false);
 
 				foreach($dataEngineer as $key=>$value){
 					//echo "The index is = " . $key . ", and value is = " . $value;
@@ -1586,61 +1590,65 @@ if(count($jobListsENV)<=46){
 				
 			}
 
-			// สรุปผล
 
-			$pdf->SetXY(6,$posXRowP5_list);
-			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(54,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
-		
-			//sum (100%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(60,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'C',true);
-		
-			//sum (87%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(72,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
-		
-			//sum ค่าตอบแทน หน.ฯ(10%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(85,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(14,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_boss_dispense,2) ),1,1,'R',false); //ค่าตอบแทน หน.ฯ(10%)
-		
-		
-			foreach($dataEngineer as $keySq=>$item){
-				//echo "The index is = " . $key . ", and value is = " . $value;
-				$engPos=$posXColHeader[$keySq];
-				$pdf->SetXY($engPos,$posXRowP5_list);
-		
-				if($item['blank']=="yes"){
-					$pdf->SetFillColor(206, 213, 222);
-					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
-				}else{
-					$pdf->SetFillColor(255, 255, 255);
-					$pdf->SetFont('THSarabun','B',8);
-					$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+			if(count($jobListsENV)>145){
+				// สรุปผล
+
+				$pdf->SetXY(6,$posXRowP5_list);
+				$pdf->SetFillColor(206, 213, 222);
+				$pdf->Cell(54,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
+			
+				//sum (100%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(60,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'C',true);
+			
+				//sum (87%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(72,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
+			
+				//sum ค่าตอบแทน หน.ฯ(10%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(85,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(14,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_boss_dispense,2) ),1,1,'R',false); //ค่าตอบแทน หน.ฯ(10%)
+			
+			
+				foreach($dataEngineer as $keySq=>$item){
+					//echo "The index is = " . $key . ", and value is = " . $value;
+					$engPos=$posXColHeader[$keySq];
+					$pdf->SetXY($engPos,$posXRowP5_list);
+			
+					if($item['blank']=="yes"){
+						$pdf->SetFillColor(206, 213, 222);
+						$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+					}else{
+						$pdf->SetFillColor(255, 255, 255);
+						$pdf->SetFont('THSarabun','B',8);
+						$pdf->Cell(10.65,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+					}
+			
 				}
+			
+				//ขึ้นบรรทัดใหม่
+				$posXRowP5_list +=$hightRow+2;
+				//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
+			
+				$pdf->SetFont('THSarabun','',12);
+				$pdf->SetXY(6,$posXRowP5_list);
+				$pdf->SetFillColor(206, 213, 222);
+				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
+			
+				$pdf->SetFont('THSarabun','B',12);
+				$pdf->SetXY(26,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
 		
 			}
-		
-			//ขึ้นบรรทัดใหม่
-			$posXRowP5_list +=$hightRow+2;
-			//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
-		
-			$pdf->SetFont('THSarabun','',12);
-			$pdf->SetXY(6,$posXRowP5_list);
-			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
-		
-			$pdf->SetFont('THSarabun','B',12);
-			$pdf->SetXY(26,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
-		
+
 		
 			//ขึ้นบรรทัดใหม่
 			/*$posXRowP5_list +=$hightRow;

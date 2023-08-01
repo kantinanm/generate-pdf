@@ -350,11 +350,12 @@ $customer_env=38;
 $jobListsENV[0]=array("work_code"=>"ENV368/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0533","department"=>"บริษัท การบินกรุงเทพ จำกัด (มหาชน)","sub_category"=>"water","total"=>10110.00,"income_cecentre"=>8795.70,"boss_dispense"=>879.57,"engineer_nu_net"=>"wilawank","engineer_dispense"=>1759.14);
 $jobListsENV[1]=array("work_code"=>"ENV363/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0534","department"=>"บริษัท เซ็นทรัลเวิลด์ จำกัด","sub_category"=>"water","total"=>6220.00,"income_cecentre"=>5411.40,"boss_dispense"=>541.14,"engineer_nu_net"=>"ampolt","engineer_dispense"=>1082.28);
 $jobListsENV[2]=array("work_code"=>"CE 92/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0532","department"=>"บริษัท เก้าทัพวิศวกรรม จำกัด","sub_category"=>"concrete","total"=>360.00,"income_cecentre"=>313.20,"boss_dispense"=>31.32,"engineer_nu_net"=>"jeerapongl","engineer_dispense"=>62.64,"technician_nu_net"=>"apicharts","technician_dispense"=>46.98,"office_dispense"=>15.66);
+//$jobListsENV[99]=array("work_code"=>"CE 100/2566","ref_date_th"=>"04/07/2566","ref_doc"=>"307/0532","department"=>"บริษัท เก้าทัพวิศวกรรม จำกัด","sub_category"=>"concrete","total"=>360.00,"income_cecentre"=>313.20,"boss_dispense"=>31.32,"engineer_nu_net"=>"jeerapongl","engineer_dispense"=>62.64,"technician_nu_net"=>"apicharts","technician_dispense"=>46.98,"office_dispense"=>15.66);
 
 
 
 
-for ($i=3; $i<98; $i++) {
+for ($i=3; $i<154; $i++) {
 	$jobListsENV[$i]=$jobListsENV[1];
 }
 
@@ -1085,7 +1086,7 @@ if(count($jobListsENV)<=46){
 			}
 
 			//วน loop เริ่มจาก index ที่ 98
-			for ($i=97; $i<count($jobListsENV); $i++) {
+			for ($i=98; $i<count($jobListsENV); $i++) {
 				
 				$pdf->SetFont('THSarabun','',12);
 				$pdf->SetXY(6,$posXRowP4_list);
@@ -1248,10 +1249,7 @@ if(count($jobListsENV)<=46){
 				$pdf->Text( 88 , $StartP2headerBaseLineY+4 ,  iconv( 'UTF-8','cp874' , '(10%)' ));
 			
 					
-				
-
-
-			
+							
 				// ส่วนสรุปผล
 				//รวม
 				$pdf->SetXY(6,$posXRowP4_list);
@@ -1326,12 +1324,12 @@ if(count($jobListsENV)<=46){
 
 		}
 
-		if(($numberEnv>145)&(count($jobListsENV)<=160)){
+		if(($numberEnv>146)&(count($jobListsENV)<=160)){
 			$pdf->AddPage("P",'A4');
 			//summary only
 			$posXRowP5_list=28; // fix start datarow //แสดงข้อมูลต่อ
 
-			if(count($jobListsENV)>148){
+			if(count($jobListsENV)>145){
 				// เพิ่มหัวตาราง
 				$pdf->SetXY(60,$startP2BaseLineY-1);
 				$pdf->SetFont('THSarabun','B',12);
@@ -1496,60 +1494,64 @@ if(count($jobListsENV)<=46){
 				
 			}
 
-			// สรุปผล
+			
+			if(count($jobListsENV)>145){
+				// สรุปผล
 
-			$pdf->SetXY(6,$posXRowP5_list);
-			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(54,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
-		
-			//sum (100%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(60,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'C',true);
-		
-			//sum (87%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(72,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
-		
-			//sum ค่าตอบแทน หน.ฯ(10%)
-			$pdf->SetFont('THSarabun','B',9);
-			$pdf->SetXY(85,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(14,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_boss_dispense,2) ),1,1,'R',false); //ค่าตอบแทน หน.ฯ(10%)
-		
-		
-			foreach($dataEngineer as $keySq=>$item){
-				//echo "The index is = " . $key . ", and value is = " . $value;
-				$engPos=$posXColHeader[$keySq];
-				$pdf->SetXY($engPos,$posXRowP5_list);
-		
-				if($item['blank']=="yes"){
-					$pdf->SetFillColor(206, 213, 222);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
-				}else{
-					$pdf->SetFillColor(255, 255, 255);
-					$pdf->SetFont('THSarabun','B',8);
-					$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+				$pdf->SetXY(6,$posXRowP5_list);
+				$pdf->SetFillColor(206, 213, 222);
+				$pdf->Cell(54,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'C',true);
+			
+				//sum (100%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(60,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(12,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_total,2) ),1,1,'C',true);
+			
+				//sum (87%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(72,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(13,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_income_cecentre,2) ),1,1,'C',true);
+			
+				//sum ค่าตอบแทน หน.ฯ(10%)
+				$pdf->SetFont('THSarabun','B',9);
+				$pdf->SetXY(85,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(14,$hightRow,iconv( 'UTF-8','cp874' ,  number_format($sum_boss_dispense,2) ),1,1,'R',false); //ค่าตอบแทน หน.ฯ(10%)
+			
+			
+				foreach($dataEngineer as $keySq=>$item){
+					//echo "The index is = " . $key . ", and value is = " . $value;
+					$engPos=$posXColHeader[$keySq];
+					$pdf->SetXY($engPos,$posXRowP5_list);
+			
+					if($item['blank']=="yes"){
+						$pdf->SetFillColor(206, 213, 222);
+						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , '' ),1,1,'R',true);
+					}else{
+						$pdf->SetFillColor(255, 255, 255);
+						$pdf->SetFont('THSarabun','B',8);
+						$pdf->Cell(($keySq==count($dataEngineer)-1)?7.5:9,$hightRow,iconv( 'UTF-8','cp874' , number_format($sumEngineer[$keySq],2) ),1,1,'C',false); //ยอดรวมของ วิศวกรคนที่ตรวจสอบผล
+					}
+			
 				}
-		
+			
+				//ขึ้นบรรทัดใหม่
+				$posXRowP5_list +=$hightRow+2;
+				//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
+			
+				$pdf->SetFont('THSarabun','',12);
+				$pdf->SetXY(6,$posXRowP5_list);
+				$pdf->SetFillColor(206, 213, 222);
+				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
+			
+				$pdf->SetFont('THSarabun','B',12);
+				$pdf->SetXY(26,$posXRowP5_list);
+				$pdf->SetFillColor(255, 255, 255);
+				$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
 			}
-		
-			//ขึ้นบรรทัดใหม่
-			$posXRowP5_list +=$hightRow+2;
-			//แถวสุดท้ายที่สามารถแสดงได้ คือตำแหน่งที่ 268 // เต็มที่คือแสดงได้แค่ ไม่เกิน 46 รายการ (กรณีที่มี summary text ท้ายกระดาษ) หากมากกว่านั้น ต้องตัดไปหน้าใหม่ในรายการที่ 50 (หน้าแรกไม่เกิน 49)
-		
-			$pdf->SetFont('THSarabun','',12);
-			$pdf->SetXY(6,$posXRowP5_list);
-			$pdf->SetFillColor(206, 213, 222);
-			$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เดือน' ),1,1,'C',true);
-		
-			$pdf->SetFont('THSarabun','B',12);
-			$pdf->SetXY(26,$posXRowP5_list);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , $month_th ),1,1,'C',true);
+
 		
 		
 			//ขึ้นบรรทัดใหม่
