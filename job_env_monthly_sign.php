@@ -107,10 +107,100 @@ $pdf->SetFillColor(206, 213, 222);
 $pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เบิกจ่ายจริง' ),1,1,'C',true);
 
 
+
+$url = 'http://localhost:8000/api/benefit-monthly';
+
+// request data that is going to be sent as POST to API
+$dataPost = array(
+    "year" => 2566,
+    "month_en" => "July",
+);
+
+$curl = curl_init();
+
+// encoding the request data as JSON which will be sent in POST
+$encodedData = json_encode($dataPost);
+
+// Set query data here with the URL
+curl_setopt($curl, CURLOPT_URL, $url); 
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+    'Content-Type:application/json'
+));
+
+curl_setopt($curl, CURLOPT_POST, true);
+
+// Curl POST the JSON data to send the request
+curl_setopt($curl, CURLOPT_POSTFIELDS, $encodedData);
+
+
+$content = curl_exec($curl);
+//curl_close($ch);
+//print $content;
+curl_close($curl);
+//echo $content;
+$obj = json_decode($content, false);
+
+//var_dump(json_decode($content));
+
+$max_credit_engineer=15000;
+$max_credit_technician=10000;
+$max_credit_director=7000;
+$max_credit_officer=1500;
+
+//print_r($obj);
+$indexDirector=0;
+$indexOfficer=0;
+$indexEngineer=0;
+$indexTechnician=0;
+$indexW=0;//PersonalLists
+foreach ($obj[0] as $key => $row) {
+ 
+    //echo $row->username." ".$row->firstname."<br>";
+    //echo $key;
+
+    $PersonalLists[0]=array("fullname"=>"ดร.สุภาวรรณ ศรีรัตนา","expect"=>13308.39,"actual"=>7000,"price_th"=>"เจ็ดพันบาทถ้วน","with_draw"=>1);
+
+    if($row->staff_type=="administrator"){
+        $data[$indexDirector]=array("name"=>$row->firstname,"expect"=>$row->estimate,"actual"=>$row->money,"role"=>"หัวหน้าศูนย์ทดสอบ");
+        if($row->estimate>=$max_credit_director){
+            $PersonalLists[$indexW]=array("fullname"=>$row->fullname_thai,"expect"=>$row->estimate,"actual"=>$row->money,"price_th"=>"เจ็ดพันบาทถ้วน","with_draw"=>1);
+            $indexW++;
+        }
+    }else if($row->staff_type=="financial_officers"){
+        $dataOfficer[$indexOfficer]=array("name"=>$row->firstname,"expect"=>$row->estimate,"actual"=>$row->money,"role"=>"เจ้าหน้าที่โครงการ");
+        $indexOfficer++;
+        if($row->estimate>=$max_credit_officer){
+            $PersonalLists[$indexW]=array("fullname"=>$row->fullname_thai,"expect"=>$row->estimate,"actual"=>$row->money,"price_th"=>"หนึ่งพันห้าร้อยบาทถ้วน","with_draw"=>1);
+            $indexW++;
+        }
+    }else if($row->staff_type=="user"){
+        $dataEngineer[$indexEngineer]=array("name"=>$row->firstname,"expect"=>$row->estimate,"actual"=>$row->money,"role"=>"วิศวกรตรวจสอบผล");
+        $indexEngineer++;
+        if($row->estimate>=$max_credit_engineer){
+            $PersonalLists[$indexW]=array("fullname"=>$row->fullname_thai,"expect"=>$row->estimate,"actual"=>$row->money,"price_th"=>"หนึ่งหมื่นห้าพันบาทถ้วน","with_draw"=>1);
+            $indexW++;
+        }
+    }else if($row->staff_type=="worker"){
+        $dataTechnician[$indexTechnician]=array("name"=>$row->firstname,"expect"=>$row->estimate,"actual"=>$row->money,"role"=>"ผู้ปฏิบัติการทดสอบ");
+        $indexTechnician++;
+        if($row->estimate>=$max_credit_technician){
+            $PersonalLists[$indexW]=array("fullname"=>$row->fullname_thai,"expect"=>$row->estimate,"actual"=>$row->money,"price_th"=>"หนึ่งหมื่นบาทถ้วน","with_draw"=>1);
+            $indexW++;
+        }
+    }
+}
+$PersonalLists[$indexW]=array("fullname"=>"นางสาวลูกน้ำ มากลิ่น","expect"=>0,"actual"=>0,"price_th"=>"","with_draw"=>0);
+$indexW++;
+$PersonalLists[$indexW]=array("fullname"=>"นางสาวทัศพร กนกพารา","expect"=>0,"actual"=>0,"price_th"=>"","with_draw"=>0);
+
+
 // END Head Column 1
 
 
-$data[0]=array("name"=>"สุภาวรรณ","expect"=>13308.39,"actual"=>7000,"role"=>"หัวหน้าศูนย์ทดสอบ");
+//$data[0]=array("name"=>"สุภาวรรณ","expect"=>13308.39,"actual"=>7000,"role"=>"หัวหน้าศูนย์ทดสอบ");
 
 
 //Head Column 2
@@ -133,7 +223,7 @@ $pdf->SetFillColor(206, 213, 222);
 $pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เบิกจ่ายจริง' ),1,1,'C',true);
 
 // END Head Column 
-
+/*
 $dataEngineer[0]=array("name"=>"อำพล","expect"=>2898.84,"actual"=>2898.84,"role"=>"วิศวกรตรวจสอบผล");
 $dataEngineer[1]=array("name"=>"ดลเดช","expect"=>4939.86,"actual"=>4939.86,"role"=>"วิศวกรตรวจสอบผล");
 $dataEngineer[2]=array("name"=>"จีรพงษ์","expect"=>62.64,"actual"=>62.64,"role"=>"วิศวกรตรวจสอบผล");
@@ -144,7 +234,7 @@ $dataEngineer[6]=array("name"=>"ธนพล","expect"=>1792.20,"actual"=>1792.2
 $dataEngineer[7]=array("name"=>"วิรินทร์ ","expect"=>1092.72,"actual"=>1092.72,"role"=>"วิศวกรตรวจสอบผล");
 $dataEngineer[8]=array("name"=>"วรางค์ลักษณ์","expect"=>993.54,"actual"=>993.54,"role"=>"วิศวกรตรวจสอบผล");
 $dataEngineer[9]=array("name"=>"วิลาวัลย์","expect"=>8743.50,"actual"=>8743.50,"role"=>"วิศวกรตรวจสอบผล");
-
+*/
 
 
 //Head Column 3
@@ -167,12 +257,12 @@ $pdf->SetFillColor(206, 213, 222);
 $pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เบิกจ่ายจริง' ),1,1,'C',true);
 
 // END Head Column 
-
+/*
 $dataTechnician[0]=array("name"=>"อภิชาติ","expect"=>46.98,"actual"=>46.98,"role"=>"ผู้ปฏิบัติการทดสอบ");
 $dataTechnician[1]=array("name"=>"กาลไกล","expect"=>117.45,"actual"=>117.45,"role"=>"ผู้ปฏิบัติการทดสอบ");
 $dataTechnician[2]=array("name"=>"นิภาวรรณ","expect"=>10426.99,"actual"=>10000,"role"=>"ผู้ปฏิบัติการทดสอบ");
 $dataTechnician[3]=array("name"=>"วิชญา","expect"=>9371.21,"actual"=>9371.21,"role"=>"ผู้ปฏิบัติการทดสอบ");
-
+*/
 
 //Head Column 4
 $pdf->SetXY(200,$startBaseLineY);
@@ -196,13 +286,13 @@ $pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , 'เบิกจ่ายจร
 
 // END Head Column
 
-
+/*
 $dataOfficer[0]=array("name"=>"อัมพรรัตน์","expect"=>6654.24,"actual"=>1500,"role"=>"เจ้าหน้าที่โครงการ");
 $dataOfficer[1]=array("name"=>"พนารัตน์","expect"=>6654.24,"actual"=>1500,"role"=>"เจ้าหน้าที่โครงการ");
 $dataOfficer[2]=array("name"=>"ศุภวรรณ","expect"=>6654.24,"actual"=>1500,"role"=>"เจ้าหน้าที่โครงการ");
 $dataOfficer[3]=array("name"=>"มณีรัตน์","expect"=>6654.24,"actual"=>1500,"role"=>"เจ้าหน้าที่โครงการ");
 $dataOfficer[4]=array("name"=>"นิชานาถ","expect"=>6654.24,"actual"=>1500,"role"=>"เจ้าหน้าที่โครงการ");
-
+*/
 
 
 //////////////////////
@@ -464,6 +554,7 @@ $pdf->Cell(20,$hightRow,iconv( 'UTF-8','cp874' , number_format($sum_director+$su
 
 
 //รายชื่อที่ขอเบิกสูงสุดตามอัตราในประกาศ
+/*
 $PersonalLists[0]=array("fullname"=>"ดร.สุภาวรรณ ศรีรัตนา","expect"=>13308.39,"actual"=>7000,"price_th"=>"เจ็ดพันบาทถ้วน","with_draw"=>1);
 $PersonalLists[1]=array("fullname"=>"นางสาวศุภวรรณ วรนุช","expect"=>13308.39,"actual"=>1500,"price_th"=>"หนึ่งพันห้าร้อยบาทถ้วน","with_draw"=>1);
 $PersonalLists[2]=array("fullname"=>"นางสาวมณีรัตน์ สีเขียว","expect"=>13308.39,"actual"=>1500,"price_th"=>"หนึ่งพันห้าร้อยบาทถ้วน","with_draw"=>1);
@@ -475,7 +566,7 @@ $PersonalLists[7]=array("fullname"=>"นางวิชญา  อิ่มก�
 $PersonalLists[8]=array("fullname"=>"ผู้ช่วยศาสตราจารย์ ดร.วิลาวัลย์ คณิตชัยเดชา","expect"=>13308.39,"actual"=>15000,"price_th"=>"หนึ่งหมื่นห้าพันบาทถ้วน","with_draw"=>1);
 $PersonalLists[9]=array("fullname"=>"นางสาวลูกน้ำ มากลิ่น","expect"=>0,"actual"=>0,"price_th"=>"","with_draw"=>0);
 $PersonalLists[10]=array("fullname"=>"นางสาวทัศพร กนกพารา","expect"=>0,"actual"=>0,"price_th"=>"","with_draw"=>0);
-
+*/
 //$point_x_row +=48;
 $point_x_row=120; //fix
 
